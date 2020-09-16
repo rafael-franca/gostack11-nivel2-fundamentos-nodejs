@@ -14,11 +14,32 @@ class TransactionsRepository {
   }
 
   public all(): Transaction[] {
-    // TODO
+    return this.transactions;
   }
 
   public getBalance(): Balance {
-    // TODO
+    const transactions = this.transactions;
+
+    let income = 0;
+    let outcome = 0;
+
+    transactions.map(transaction => {
+      if (transaction.type == 'income') {
+        income += transaction.value;
+      } else if (transaction.type == 'outcome') {
+        outcome += transaction.value;
+      } else {
+        throw Error('Invalid transaction type!');
+      }
+    });
+
+    const total = income - outcome;
+
+    return {
+      income,
+      outcome,
+      total
+    };
   }
 
   public create(): Transaction {
